@@ -18,10 +18,16 @@ type Observer interface {
 	Update(*Game)
 }
 
-type Broadcaster struct{}
+type Broadcaster1 struct{}
 
-func (p *Broadcaster) Update(g *Game) {
-	fmt.Printf("omg!!! player moved!!! new position is (%d, %d)\n", g.playerX, g.playerY)
+func (p *Broadcaster1) Update(g *Game) {
+	fmt.Printf("omg!!! player moved!!! new position is (%d, %d)!\n", g.playerX, g.playerY)
+}
+
+type Broadcaster2 struct{}
+
+func (p *Broadcaster2) Update(g *Game) {
+	fmt.Printf("Alert! Alert! The player landed at coordinates (%d, %d)!\n", g.playerX, g.playerY)
 }
 
 type Game struct {
@@ -62,7 +68,8 @@ func (g *Game) Initialize() {
 	g.grid[2] = replaceAtIndex(g.grid[2], obstacle, 4)
 	g.grid[3] = replaceAtIndex(g.grid[3], obstacle, 1)
 
-	g.observers = append(g.observers, &Broadcaster{})
+	g.observers = append(g.observers, &Broadcaster1{})
+	g.observers = append(g.observers, &Broadcaster2{})
 }
 
 func (g *Game) NotifyObservers() {
